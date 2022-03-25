@@ -33,6 +33,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
         actualizarCombobox();
         arbol = (DefaultTreeModel) jTree1.getModel();
         root = new DefaultMutableTreeNode("Planetas");
+        llenarTree();
     }
 
     public void inicializar() {
@@ -222,6 +223,10 @@ public class Main extends javax.swing.JFrame implements Serializable {
             DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(planeta.nombre);
             root.add(hijo);
         }
+        arbol.setRoot(root);
+    }
+    public void vaciarArbol(){
+        
     }
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
@@ -246,9 +251,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
 
     }//GEN-LAST:event_agregarCientificoActionPerformed
-    public void vaciarArbol(){
-        
-    }
+    
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
         if (jCheckBox1.isSelected()) {
             vaciarArbol();
