@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Cientifico implements Serializable {
 
-    private String nombreCientifico;
+    public String nombreCientifico;
     private ArrayList<Planeta> planetasdescubiertos = new ArrayList();
 
     public Cientifico(String nombre) {
