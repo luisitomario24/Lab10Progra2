@@ -91,6 +91,8 @@ public class Main extends javax.swing.JFrame implements Serializable {
         popmenu = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -111,6 +113,10 @@ public class Main extends javax.swing.JFrame implements Serializable {
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
         popmenu.add(jCheckBoxMenuItem1);
+
+        jMenuItem4.setText("planeta1\n");
+
+        jMenuItem2.setText("planeta2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -232,6 +238,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
+            
         }
     }//GEN-LAST:event_jTree1MouseClicked
     public void LLenarCombo() {
@@ -306,6 +313,8 @@ public class Main extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
