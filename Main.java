@@ -225,9 +225,10 @@ public class Main extends javax.swing.JFrame implements Serializable {
         }
         arbol.setRoot(root);
     }
-    public void vaciarArbol(){
-        
+
+    public void vaciarArbol() {
     }
+
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
@@ -251,7 +252,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
 
     }//GEN-LAST:event_agregarCientificoActionPerformed
-    
+
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
         if (jCheckBox1.isSelected()) {
             vaciarArbol();
@@ -260,6 +261,9 @@ public class Main extends javax.swing.JFrame implements Serializable {
             vaciarArbol();
         }
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
+    public double calcularDistancia() {
+        return 0 ;
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

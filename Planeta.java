@@ -45,7 +45,7 @@ public class Planeta implements Serializable{
         this.nombre = nombre;
     }
 
-    public int getCordenadaX() {
+        public int getCordenadaX() {
         return cordenadaX;
     }
 
