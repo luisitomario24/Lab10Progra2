@@ -1,8 +1,10 @@
 
 package Lab10Progra2;
 
+import java.io.Serializable;
 
-public class Planeta {
+
+public class Planeta implements Serializable{
     int tamaño;
     int peso;
     String nombre;
