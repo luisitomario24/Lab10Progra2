@@ -27,6 +27,12 @@ public class Cientifico implements Serializable {
     public void setPlanetasdescubiertos(ArrayList<Planeta> planetasdescubiertos) {
         this.planetasdescubiertos = planetasdescubiertos;
     }
+
+    @Override
+    public String toString() {
+        return  nombreCientifico ;
+    }
+    
     
     
 

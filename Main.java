@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -15,8 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements Serializable {
 
+    private final DefaultMutableTreeNode root;
+    private final DefaultTreeModel arbol;
     private ArrayList<Planeta> listaplanetas = new ArrayList();
     private ArrayList<Cientifico> listacientificos = new ArrayList();
 
@@ -25,11 +28,15 @@ public class Main extends javax.swing.JFrame {
         inicializar();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        //modelo = (DefaultTreeModel)jt_planetas.getModel();
-        //root = new DefaultMutableTreeNode("Planetas"); 
+
+        MostrarCientificos();
+        actualizarCombobox();
+        arbol = (DefaultTreeModel) jTree1.getModel();
+        root = new DefaultMutableTreeNode("Planetas");
     }
 
     public void inicializar() {
+        listaplanetas.add(new Terrestre(5000, 13000, "Planeta Vegeta", 400, 300));
         listaplanetas.add(new Terrestre(5000, 13000, "Mercurio", 400, 300));
         listaplanetas.add(new Terrestre(100000, 15000, "Venus", 640, 260));
         listaplanetas.add(new Terrestre(140000, 17000, "Tierra", 760, 570));
@@ -47,7 +54,7 @@ public class Main extends javax.swing.JFrame {
                 entrada.writeObject(cienti);
             }
         } catch (IOException ex) {
-
+            System.out.println(ex);
         }
     }
 
@@ -55,13 +62,24 @@ public class Main extends javax.swing.JFrame {
         try {
             ObjectInputStream salida = new ObjectInputStream(new FileInputStream("./Cientificos.LMMC"));
             Cientifico cientifique;
-            while ((cientifique = (Cientifico) salida.readObject()) != null) {
-                listacientificos.add(cientifique);
+            try {
+                while ((cientifique = (Cientifico) salida.readObject()) != null) {
+                    listacientificos.add(cientifique);
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
 
-        } catch (ClassNotFoundException ex) {
-
+    public void actualizarCombobox() {
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) comboCientifico.getModel();
+        modelo.removeAllElements();
+        for (Cientifico cientifique : listacientificos) {
+            modelo.addElement(cientifique);
         }
     }
 
@@ -96,8 +114,13 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jCheckBox1.setText("Puesto");
+        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox1ItemStateChanged(evt);
+            }
+        });
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("JTree");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -182,8 +205,9 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(comboCientifico, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addComponent(nombreCientifico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nombreCientifico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox1)
@@ -193,13 +217,18 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public void llenarTree() {
+        for (Planeta planeta : listaplanetas) {
+            DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(planeta.nombre);
+            root.add(hijo);
+        }
+    }
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jTree1MouseClicked
-    public void LLenarComboBox() {
+    public void LLenarCombo() {
         comboCientifico.removeAllItems();
         for (Cientifico cienti : listacientificos) {
             comboCientifico.addItem(cienti.nombreCientifico);
@@ -211,12 +240,23 @@ public class Main extends javax.swing.JFrame {
 
     private void agregarCientificoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCientificoActionPerformed
         listacientificos.add(new Cientifico(nombreCientifico.getText()));
-        LLenarComboBox();
-        nombreCientifico.setText(" ");
+        LLenarCombo();
+        nombreCientifico.setText("");
         RegistrarCientifico();
 
 
     }//GEN-LAST:event_agregarCientificoActionPerformed
+    public void vaciarArbol(){
+        
+    }
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+        if (jCheckBox1.isSelected()) {
+            vaciarArbol();
+            llenarTree();
+        } else {
+            vaciarArbol();
+        }
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
