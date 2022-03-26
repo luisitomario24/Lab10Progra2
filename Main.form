@@ -8,29 +8,24 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+        <MenuItem class="javax.swing.JMenuItem" name="planeta1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenuItem1"/>
+            <Property name="text" type="java.lang.String" value="planeta1"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="planeta1ActionPerformed"/>
+          </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+        <MenuItem class="javax.swing.JMenuItem" name="Planeta2">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="jCheckBoxMenuItem1"/>
+            <Property name="text" type="java.lang.String" value="Planeta2&#xa;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Planeta2ActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="planeta1&#xa;"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="planeta2"/>
-      </Properties>
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -67,7 +62,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="planeta1" pref="212" max="32767" attributes="0"/>
+                          <Component id="jtplaneta1" pref="212" max="32767" attributes="0"/>
                           <Component id="planeta2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="comboCientifico" alignment="0" max="32767" attributes="0"/>
@@ -98,7 +93,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="planeta1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtplaneta1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
@@ -164,7 +159,7 @@
     </Container>
     <Component class="javax.swing.JTextField" name="planeta2">
     </Component>
-    <Component class="javax.swing.JTextField" name="planeta1">
+    <Component class="javax.swing.JTextField" name="jtplaneta1">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
