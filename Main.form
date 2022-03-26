@@ -74,9 +74,9 @@
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="Colisionar" min="-2" pref="146" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jProgressBar1" min="-2" pref="671" max="-2" attributes="0"/>
+                      <Component id="barracoli" min="-2" pref="671" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jProgressBar2" alignment="0" min="-2" pref="671" max="-2" attributes="0"/>
+                  <Component id="barracoli2" alignment="0" min="-2" pref="671" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
@@ -86,9 +86,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Component id="jProgressBar1" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="barracoli" min="-2" pref="52" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jProgressBar2" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="barracoli2" min="-2" pref="52" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
@@ -126,13 +126,13 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+    <Component class="javax.swing.JProgressBar" name="barracoli">
     </Component>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar2">
+    <Component class="javax.swing.JProgressBar" name="barracoli2">
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Puesto"/>
+        <Property name="text" type="java.lang.String" value="Publico"/>
       </Properties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox1ItemStateChanged"/>

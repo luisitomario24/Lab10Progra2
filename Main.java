@@ -92,8 +92,8 @@ public class Main extends javax.swing.JFrame implements Serializable {
         popmenu = new javax.swing.JPopupMenu();
         planetauno = new javax.swing.JMenuItem();
         Planetados = new javax.swing.JMenuItem();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        barracoli = new javax.swing.JProgressBar();
+        barracoli2 = new javax.swing.JProgressBar();
         jCheckBox1 = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -124,7 +124,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jCheckBox1.setText("Puesto");
+        jCheckBox1.setText("Publico");
         jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCheckBox1ItemStateChanged(evt);
@@ -192,17 +192,17 @@ public class Main extends javax.swing.JFrame implements Serializable {
                                 .addComponent(nombreCientifico))
                             .addGap(28, 28, 28)
                             .addComponent(Colisionar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(barracoli, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(barracoli2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(barracoli, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(barracoli2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -242,6 +242,8 @@ public class Main extends javax.swing.JFrame implements Serializable {
     }
 
     public void vaciarArbol() {
+        root.removeAllChildren();
+        arbol.reload();
     }
 
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
@@ -255,6 +257,10 @@ public class Main extends javax.swing.JFrame implements Serializable {
         for (Cientifico cienti : listacientificos) {
             comboCientifico.addItem(cienti.nombreCientifico);
         }
+    }
+
+    public void actualizarPlaneta() {
+
     }
     private void comboCientificoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboCientificoMouseClicked
 
@@ -299,10 +305,59 @@ public class Main extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_PlanetadosActionPerformed
 
     private void ColisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColisionarActionPerformed
-        // TODO add your handling code here:
+        calcularDistancia();
+        int distancia =calcularDistancia();
+        barracoli.setMaximum(distancia);
+        Cientifico cienti = (Cientifico)comboCientifico.getSelectedItem();
+        Hilo hile = new Hilo( barracoli,barracoli2, seleccionado1, seleccionado2,cienti);
+        hile.start();
+        
     }//GEN-LAST:event_ColisionarActionPerformed
-    public double calcularDistancia() {
-        return 0;
+    public int calcularDistancia() {
+        double distanciarecorrida;
+        double cordenadax1 = seleccionado1.getCordenadaX();
+        double cordenadax12 = seleccionado2.getCordenadaX();
+        double cordenaday1 = seleccionado1.getCordenaday();
+        double cordenaday12 = seleccionado2.getCordenaday();
+
+        double expX = Math.pow(cordenadax12 - cordenadax1, 2);
+        double expY = Math.pow(cordenaday12 - cordenaday1, 2);
+        distanciarecorrida = Math.sqrt(expX + expY);
+        int y = (int) Math.round(distanciarecorrida);
+        return y;
+
+    }
+
+    private void DescubirPlaneta() {
+        int tamaño, peso, cox, y;
+        peso = (seleccionado1.getPeso() + seleccionado2.getPeso()) / 2;
+        tamaño = (seleccionado1.getTamaño() + seleccionado2.getTamaño()) / 2;
+        cox = (seleccionado1.getCordenadaX() + seleccionado2.getCordenadaX()) / 2;
+        y = (seleccionado1.getCordenaday() + seleccionado2.getCordenaday()) / 2;
+        DefaultComboBoxModel m = (DefaultComboBoxModel) comboCientifico.getModel();
+        Random r = new Random();
+        if (seleccionado1 instanceof Terrestre) {
+
+            int x = 1 + r.nextInt(100);
+            if (x <= 25) {
+                String nombre = JOptionPane.showInputDialog("Ingrese el nombre del planeta descubierto : ");
+                ((Cientifico) m.getSelectedItem()).getPlanetasdescubiertos().add(new Terrestre(tamaño, peso, nombre, cox, y));
+                actualizarPlaneta();
+                MostrarCientificos();
+            }
+        } else {
+            int x = 1 + r.nextInt(100);
+            if (x <= 20) {
+                String nombre = JOptionPane.showInputDialog("Ingrese el nombre del planeta descubierto: ");
+                ((Cientifico) m.getSelectedItem()).getPlanetasdescubiertos().add(new Gaseoso(tamaño, peso, nombre, cox, y));
+                actualizarPlaneta();
+                RegistrarCientifico();
+            }
+        }
+
+        jtplaneta1.setText("");
+        planeta2.setText("");
+
     }
 
     public static void main(String args[]) {
@@ -341,12 +396,12 @@ public class Main extends javax.swing.JFrame implements Serializable {
     private javax.swing.JButton Colisionar;
     private javax.swing.JMenuItem Planetados;
     private javax.swing.JButton agregarCientifico;
+    private javax.swing.JProgressBar barracoli;
+    private javax.swing.JProgressBar barracoli2;
     private javax.swing.JComboBox<String> comboCientifico;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTree1;
     private javax.swing.JTextField jtplaneta1;
@@ -365,66 +420,5 @@ public class Main extends javax.swing.JFrame implements Serializable {
 //    private Planeta Neptuno=new Planeta();
     private Planeta seleccionado2;
     private Planeta seleccionado1;
-    
 
-    class HiloProgressBar extends Thread{
-    Random r = new Random();
-    private JProgressBar barra;
-    private Planeta planeta1;
-    private Planeta planeta2;
-    private Cientifico cientifico;
-    private boolean existe;
-    public HiloProgressBar(JProgressBar barra, Planeta planeta1, Planeta planeta2, Cientifico cientifico) {
-        this.barra = barra;
-        this.planeta1 = planeta1;
-        this.planeta2 = planeta2;
-        this.cientifico = cientifico;
-        existe = true;
-    }
-    
-    @Override
-    public void run(){
-        while(existe){
-            barra.setValue(barra.getValue()+1);
-            if(barra.getValue()==barra.getMaximum()){
-                existe=false;
-                JOptionPane.showMessageDialog(null, "La colision ha terminado");
-                barra.setValue(0);
-                
-                int colision =  r.nextInt(100)+0;
-                int x = (planeta1.getCordenadaX()+planeta2.getCordenadaX())/2;
-                int y = (planeta1.getCordenaday()+planeta2.getCordenaday())/2;
-                int peso = (planeta1.getPeso()+planeta2.getPeso())/2;
-                int size = (planeta1.getTamaño()+planeta2.getTamaño())/2;
-
-                if (planeta1 instanceof Terrestre){
-                    if(colision <= 25){
-                        JOptionPane.showMessageDialog(null, "Nuevo planeta creado");
-                        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del planeta nuevo");
-                        Terrestre terrestre = new Terrestre (size, peso, nombre, x,y);
-                        cientifico.getPlanetasdescubiertos().add(terrestre);
-                    }
-                }else if (planeta2 instanceof Gaseoso){
-                    if(colision <= 20){
-                        JOptionPane.showMessageDialog(null, "Nuevo planeta creado");
-                        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del planeta nuevo");
-                        Gaseoso gaseoso = new Gaseoso ( size,peso,nombre, x, y);
-                        cientifico.getPlanetasdescubiertos().add(gaseoso);
-                    }
-                }
-
-            }                
-            
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException ex) {
-            }
-        }
-    }
-    
 }
-}
-    
-
-
-
