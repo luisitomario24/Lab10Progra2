@@ -1,24 +1,25 @@
-
 package Lab10Progra2;
 
 import java.io.Serializable;
 
+public class Planeta {
 
-public class Planeta implements Serializable{
     int tamaño;
     int peso;
     String nombre;
     int cordenadaX;
     int cordenaday;
-    public Planeta(){
-        
-    }
+
     public Planeta(int tamaño, int peso, String nombre, int cordenadaX, int cordenaday) {
         this.tamaño = tamaño;
         this.peso = peso;
         this.nombre = nombre;
         this.cordenadaX = cordenadaX;
         this.cordenaday = cordenaday;
+    }
+
+    public Planeta() {
+
     }
 
     public int getTamaño() {
@@ -45,7 +46,7 @@ public class Planeta implements Serializable{
         this.nombre = nombre;
     }
 
-        public int getCordenadaX() {
+    public int getCordenadaX() {
         return cordenadaX;
     }
 
@@ -65,5 +66,5 @@ public class Planeta implements Serializable{
     public String toString() {
         return nombre;
     }
-    
+
 }

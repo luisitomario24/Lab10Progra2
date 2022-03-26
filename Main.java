@@ -84,7 +84,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
             modelo.addElement(cientifique);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -131,7 +131,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Planetas");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -234,6 +234,8 @@ public class Main extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void llenarTree() {
+        DefaultTreeModel arbolera=(DefaultTreeModel)jTree1.getModel();
+        DefaultMutableTreeNode rot=new DefaultMutableTreeNode("Planetas");
         for (Planeta planeta : listaplanetas) {
             DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(planeta.nombre);
             root.add(hijo);
@@ -249,7 +251,13 @@ public class Main extends javax.swing.JFrame implements Serializable {
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
-
+            Object p = jTree1.getSelectionPath().getLastPathComponent();
+            int row = jTree1.getClosestRowForLocation(evt.getX(), evt.getY());
+            jTree1.setSelectionRow(row);
+            def = (DefaultMutableTreeNode) p;
+            if (def.getUserObject() instanceof Planeta) {
+                planetaSeleccionado = (Planeta) def.getUserObject();
+            }
         }
     }//GEN-LAST:event_jTree1MouseClicked
     public void LLenarCombo() {
@@ -285,34 +293,27 @@ public class Main extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
 
     private void planetaunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetaunoActionPerformed
-        try {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
-            seleccionado1 = (Planeta) selectedNode.getUserObject();
-            jtplaneta1.setText(seleccionado1.getNombre());
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
+        seleccionado1 = planetaSeleccionado;
+        jtplaneta1.setText(seleccionado1.getNombre());
     }//GEN-LAST:event_planetaunoActionPerformed
 
     private void PlanetadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlanetadosActionPerformed
-        try {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
-            seleccionado2 = (Planeta) selectedNode.getUserObject();
-            planeta2.setText(planetauno.toString());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
+        seleccionado2 = planetaSeleccionado;
+        planeta2.setText(seleccionado2.getNombre());
+
+
     }//GEN-LAST:event_PlanetadosActionPerformed
 
     private void ColisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColisionarActionPerformed
         calcularDistancia();
-        int distancia =calcularDistancia();
+        int distancia = calcularDistancia();
         barracoli.setMaximum(distancia);
-        Cientifico cienti = (Cientifico)comboCientifico.getSelectedItem();
-        Hilo hile = new Hilo( barracoli,barracoli2, seleccionado1, seleccionado2,cienti);
+        Cientifico cienti = (Cientifico) comboCientifico.getSelectedItem();
+        Hilo hile = new Hilo(barracoli, barracoli2, seleccionado1, seleccionado2, cienti);
         hile.start();
-        
+
     }//GEN-LAST:event_ColisionarActionPerformed
     public int calcularDistancia() {
         double distanciarecorrida;
@@ -421,5 +422,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
 //    private Planeta Neptuno=new Planeta();
     private Planeta seleccionado2;
     private Planeta seleccionado1;
+    DefaultMutableTreeNode def;
+    Planeta planetaSeleccionado;
 
 }
