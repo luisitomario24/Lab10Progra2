@@ -247,9 +247,21 @@ public class Main extends javax.swing.JFrame implements Serializable {
         root.removeAllChildren();
         arbol.reload();
     }
+    public Planeta retornoplanetario(String nombre) {
+        for (Planeta p : listaplanetas) {
+            if (p.nombre.equals(nombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
 
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.isMetaDown()) {
+            String hola = jTree1.getSelectionPath().toString();
+
+            String planetaNombre = hola.substring(11, hola.length() - 1);
+            planetaSeleccionado = retornoplanetario(planetaNombre);
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
             Object p = jTree1.getSelectionPath().getLastPathComponent();
             int row = jTree1.getClosestRowForLocation(evt.getX(), evt.getY());
@@ -305,12 +317,19 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
 
     }//GEN-LAST:event_PlanetadosActionPerformed
-
+    public Cientifico retornoCientifico(String nombre) {
+        for (Cientifico e : listacientificos) {
+            if (e.nombreCientifico.equals(nombre)) {
+                return e;
+            }
+        }
+        return null;
+    }
     private void ColisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColisionarActionPerformed
         calcularDistancia();
         int distancia = calcularDistancia();
         barracoli.setMaximum(distancia);
-        Cientifico cienti = (Cientifico) comboCientifico.getSelectedItem();
+        Cientifico cienti = retornoCientifico(String.valueOf(comboCientifico.getSelectedItem()));
         Hilo hile = new Hilo(barracoli, barracoli2, seleccionado1, seleccionado2, cienti);
         hile.start();
 
