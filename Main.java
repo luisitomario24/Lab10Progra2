@@ -39,7 +39,7 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
     public void inicializar() {
         listaplanetas.add(new Terrestre(5000, 13000, "Planeta Vegeta", 400, 300));
-        listaplanetas.add(new Terrestre(5000, 13000, "Mercurio", 400, 300));
+        listaplanetas.add(new Terrestre(5000, 13000, "Mercurio", 786, 3230));
         listaplanetas.add(new Terrestre(100000, 15000, "Venus", 640, 260));
         listaplanetas.add(new Terrestre(140000, 17000, "Tierra", 760, 570));
         listaplanetas.add(new Terrestre(90000, 12000, "Marte", 360, 360));
@@ -263,13 +263,13 @@ public class Main extends javax.swing.JFrame implements Serializable {
             String planetaNombre = hola.substring(11, hola.length() - 1);
             planetaSeleccionado = retornoplanetario(planetaNombre);
             popmenu.show(evt.getComponent(), evt.getX(), evt.getY());
-            Object p = jTree1.getSelectionPath().getLastPathComponent();
-            int row = jTree1.getClosestRowForLocation(evt.getX(), evt.getY());
-            jTree1.setSelectionRow(row);
-            def = (DefaultMutableTreeNode) p;
-            if (def.getUserObject() instanceof Planeta) {
-                planetaSeleccionado = (Planeta) def.getUserObject();
-            }
+//            Object p = jTree1.getSelectionPath().getLastPathComponent();
+//            int row = jTree1.getClosestRowForLocation(evt.getX(), evt.getY());
+//            jTree1.setSelectionRow(row);
+//            def = (DefaultMutableTreeNode) p;
+//            if (def.getUserObject() instanceof Planeta) {
+//                planetaSeleccionado = (Planeta) def.getUserObject();
+//            }
         }
     }//GEN-LAST:event_jTree1MouseClicked
     public void LLenarCombo() {
@@ -326,8 +326,11 @@ public class Main extends javax.swing.JFrame implements Serializable {
         return null;
     }
     private void ColisionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColisionarActionPerformed
+        //System.out.println("Distancia planeta 1"+seleccionado1.cordenadaX);
+        //System.out.println("Distancia planeta 2"+seleccionado2.cordenadaX);
         calcularDistancia();
         int distancia = calcularDistancia();
+        
         barracoli.setMaximum(distancia);
         Cientifico cienti = retornoCientifico(String.valueOf(comboCientifico.getSelectedItem()));
         Hilo hile = new Hilo(barracoli, barracoli2, seleccionado1, seleccionado2, cienti);
@@ -336,14 +339,16 @@ public class Main extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_ColisionarActionPerformed
     public int calcularDistancia() {
         double distanciarecorrida;
+       
         double cordenadax1 = seleccionado1.getCordenadaX();
         double cordenadax12 = seleccionado2.getCordenadaX();
         double cordenaday1 = seleccionado1.getCordenaday();
         double cordenaday12 = seleccionado2.getCordenaday();
-
+       
         double expX = Math.pow(cordenadax12 - cordenadax1, 2);
         double expY = Math.pow(cordenaday12 - cordenaday1, 2);
         distanciarecorrida = Math.sqrt(expX + expY);
+        
         int y = (int) Math.round(distanciarecorrida);
         return y;
 

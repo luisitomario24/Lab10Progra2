@@ -24,40 +24,43 @@ public class Hilo extends Thread {
     @Override
     public void run() {
         boolean active = true;
-        while (active) {
-            barra1.setValue(barra1.getValue() + 1);
-            if (barra1.getValue() == barra1.getMaximum()) {
-                JOptionPane.showMessageDialog(null, "Finalizacion de la imulacuiob");
-                barra1.setValue(0);
-                active = false;
+        try {
 
-                int X = (planetita1.getCordenadaX() + planetita2.getCordenadaX()) / 2;
-                int Y = (planetita1.getCordenaday() + planetita2.getCordenaday()) / 2;
-                int peso = (planetita1.getPeso() + planetita2.getPeso()) / 2;
-                int tamanio = (planetita1.getTamaño() + planetita2.getCordenadaX()) / 2;
+            while (active) {
+                System.out.println(barra1.getValue());
+                barra1.setValue(barra1.getValue() + 1);
+                if (barra1.getValue() == barra1.getMaximum()) {
+                    JOptionPane.showMessageDialog(null, "Finalizacion de la imulacuiob");
+                    barra1.setValue(0);
+                    active = false;
 
-                int probabilidad = r.nextInt(100) + 1;
+                    int X = (planetita1.getCordenadaX() + planetita2.getCordenadaX()) / 2;
+                    int Y = (planetita1.getCordenaday() + planetita2.getCordenaday()) / 2;
+                    int peso = (planetita1.getPeso() + planetita2.getPeso()) / 2;
+                    int tamanio = (planetita1.getTamaño() + planetita2.getCordenadaX()) / 2;
 
-                if (planetita1 instanceof Terrestre) {
-                    if (probabilidad <= 25) {
-                        String nombreNewPlanet = JOptionPane.showInputDialog(null, "Ingrese le nombre ");
-                        Planeta newPlanet = new Terrestre(tamanio, peso, nombreNewPlanet, X, Y);
-                        Luis.getPlanetasdescubiertos().add(newPlanet);
-                    }
-                } else if (planetita2 instanceof Gaseoso) {
-                    if (probabilidad <= 20) {
-                        String nombreNewPlanet = JOptionPane.showInputDialog(null, "Ingresde el nombre ");
-                        Planeta nuevoPlanet = new Gaseoso(tamanio, peso, nombreNewPlanet, X,Y);
-                        Luis.getPlanetasdescubiertos().add(nuevoPlanet);
+                    int probabilidad = r.nextInt(100) + 1;
+
+                    if (planetita1 instanceof Terrestre) {
+                        if (probabilidad <= 25) {
+                            String nombreNewPlanet = JOptionPane.showInputDialog(null, "Ingrese le nombre ");
+                            Planeta newPlanet = new Terrestre(tamanio, peso, nombreNewPlanet, X, Y);
+                            Luis.getPlanetasdescubiertos().add(newPlanet);
+                        }
+                    } else if (planetita2 instanceof Gaseoso) {
+                        if (probabilidad <= 20) {
+                            String nombreNewPlanet = JOptionPane.showInputDialog(null, "Ingresde el nombre ");
+                            Planeta nuevoPlanet = new Gaseoso(tamanio, peso, nombreNewPlanet, X, Y);
+                            Luis.getPlanetasdescubiertos().add(nuevoPlanet);
+                        }
                     }
                 }
-            }
-            try {
-                Thread.sleep(5);
 
-            } catch (Exception ex) {
-                System.out.println(ex);
+                Thread.sleep(5);
             }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
 
     }
