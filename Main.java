@@ -286,10 +286,11 @@ public class Main extends javax.swing.JFrame implements Serializable {
 
     private void planetaunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetaunoActionPerformed
         try {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree1.getSelectionPath().getLastPathComponent();
             seleccionado1 = (Planeta) selectedNode.getUserObject();
-            jtplaneta1.setText(seleccionado1.toString());
-        } catch (Exception e) {
+            jtplaneta1.setText(seleccionado1.getNombre());
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
 
     }//GEN-LAST:event_planetaunoActionPerformed
