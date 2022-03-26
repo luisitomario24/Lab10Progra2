@@ -60,8 +60,10 @@ public class Planeta implements Serializable{
     public void setCordenaday(int cordenaday) {
         this.cordenaday = cordenaday;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
 }

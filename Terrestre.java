@@ -6,11 +6,9 @@ public class Terrestre extends Planeta{
     public Terrestre(int tamaño, int peso, String nombre, int cordenadaX, int cordenaday) {
         super(tamaño, peso, nombre, cordenadaX, cordenaday);
     }
-    
-    
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return super.toString();
+    }
    
 }
